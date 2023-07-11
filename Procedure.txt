@@ -1,0 +1,63 @@
+Procedure:
+==================
+
+To complete the tasks you've described, I'll guide you through the steps. Please note that I'll provide a general outline, and you'll need to adapt it to your specific requirements.
+
+Create the "XXBCM_ORDER_MGT" table using the script - DB_Prequisite.sql:
+a. Open the "DB_Prequisite.sql" script file.
+b. Review the script and ensure it contains the necessary commands to create the "XXBCM_ORDER_MGT" table.
+c. Execute the script in your database environment. This will create the "XXBCM_ORDER_MGT" table.
+
+Design the database schema:
+a. Analyze the provided data and determine the entities and relationships.
+b. Normalize the tables to reduce redundancy and improve data integrity.
+c. Identify the necessary tables, columns, data types, and constraints based on the analysis.
+d. Use appropriate naming conventions to name the tables and columns.
+e. Create the tables in your database using the SQL CREATE TABLE statement, incorporating the identified columns, data types, and constraints.
+
+Example schema:
+
+Table: Order
+Columns: order_id (primary key), customer_id (foreign key to Customer table), order_date, total_amount
+
+Table: Customer
+Columns: customer_id (primary key), customer_name, customer_address
+
+Table: Product
+Columns: product_id (primary key), product_name, price
+
+Table: Order_Item
+Columns: order_item_id (primary key), order_id (foreign key to Order table), product_id (foreign key to Product table), quantity
+
+Develop a SQL procedure to trigger a migration process:
+a. Create a database package to encapsulate the migration process logic. Let's call it "Migration_Package".
+b. Define appropriate functions or procedures within the package to handle the migration steps.
+c. Write a function or procedure that extracts information from the "XXBCM_ORDER_MGT" table and loads it into the appropriate tables in the new schema.
+d. Use SQL statements like INSERT INTO, SELECT FROM, and possibly UPDATE to migrate the data.
+e. Compile the package to ensure it is error-free.
+Example package and procedure:
+
+sql
+Copy code
+CREATE OR REPLACE PACKAGE Migration_Package AS
+  PROCEDURE Migrate_Data;
+END Migration_Package;
+/
+
+CREATE OR REPLACE PACKAGE BODY Migration_Package AS
+  PROCEDURE Migrate_Data IS
+  BEGIN
+    -- Extract data from XXBCM_ORDER_MGT and insert into appropriate tables
+    INSERT INTO Order (order_id, customer_id, order_date, total_amount)
+    SELECT mgt.order_id, mgt.customer_id, mgt.order_date, mgt.total_amount
+    FROM XXBCM_ORDER_MGT mgt;
+
+    -- Continue with other necessary data migrations
+
+    COMMIT; -- Commit the changes after successful migration
+  END Migrate_Data;
+END Migration_Package;
+/
+You can now call the Migrate_Data procedure within the Migration_Package to trigger the migration process. Adjust the procedure according to your specific data mapping and transformation requirements.
+
+Remember to review and adapt the examples provided to match your specific needs. Also, ensure you have the necessary privileges to create database objects and execute the required SQL statements.
